@@ -40,9 +40,27 @@ const ToDoApp = {
     this.taskInput.value = '';
   },
 
+  cacheDeleteButtons: function () {
+    this.deleteButtons = this.root.querySelectorAll('.delete');
+    console.dir(this.deleteButtons);
+  },
+
+  bindDeleteEvents: function () {
+    this.deleteButtons.forEach((button, index) => {
+      button.addEventListener('click', () => this.deleteTodo(index));
+    });
+  },
+
+  deleteTodo:function (index) {
+    this.todos.splice(index, 1);
+    this.render();
+  },
+
   render:function () {
-    const lis = this.todos.map(todo => `<li>${todo.task}</li>`).join('');
+    const lis = this.todos.map(todo => `<li>${todo.task}<button class ='delete'>X</button></li>`).join('');
     this.todoList.innerHTML = lis; //Be careful. Can lead to security vulnerabilities.
+    this.cacheDeleteButtons();
+    this.bindDeleteEvents();
   },
 
 };
