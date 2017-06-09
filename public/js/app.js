@@ -10,14 +10,17 @@ const ToDoApp = {
   },
   cacheDOM:function () {
     this.root = document.querySelector(this.rootElement);
-    this.addButton = this.root.querySelector('.add-button');
+    // this.addButton = this.root.querySelector('.add-button');
+    this.createForm = this.root.querySelector('.create-form');
     this.taskInput = this.root.querySelector('.task-input');
     this.todoList = this.root.querySelector('.todo-list');
   },
   bindEvents:function () {
-    this.addButton.addEventListener('click', () => this.addTodo());
+    // this.addButton.addEventListener('click', () => this.addTodo());
+    this.createForm.addEventListener('submit', (event) => this.addTodo(event));
   },
-  addTodo:function () {
+  addTodo:function (event) {
+    event.preventDefault();
     //first: grab the task input value
     const taskValue = this.taskInput.value;
     //first-part-2:validate that taskValue is actually "something"
@@ -39,7 +42,6 @@ const ToDoApp = {
 
   render:function () {
     const lis = this.todos.map(todo => `<li>${todo.task}</li>`).join('');
-    console.log(lis);
     this.todoList.innerHTML = lis; //Be careful. Can lead to security vulnerabilities.
   },
 
